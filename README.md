@@ -130,32 +130,9 @@ docker compose up postgres mock-psp -d
 ./mvnw test
 ```
 
-### Test Coverage
-
-- **Concurrency test**: 10 concurrent threads fire POST /pay for the same invoice. Asserts at most one succeeds.
-- **Idempotency test**: Same request with same key returns same response. Different body with same key returns 422.
-- **PSP failure test**: `tok_timeout` returns in <15s (not 30s), invoice stays `open`, payment attempt is `pending`.
-- **State machine test**: Paying an already-paid invoice returns 409 Conflict.
-
 ## Demo Video
 
 > **[Video link placeholder]** — Record a 5-10 minute walkthrough covering architecture, live demo, state machine, and one failure mode.
 
-## Project Structure
-
-```
-src/main/java/dodopay/invoice/
-├── InvoiceServiceApplication.java      # Entry point
-├── auth/                               # API key authentication filter
-├── controller/                         # REST endpoints
-├── dto/                                # Request/response records
-├── entity/                             # JPA entities + enums
-├── exception/                          # Error handling
-├── repository/                         # Spring Data JPA repositories
-└── service/                            # Business logic
-    ├── PaymentService.java             # Payment processing (core)
-    ├── InvoiceService.java             # Invoice state machine
-    ├── WebhookService.java             # Event dispatch
-    ├── WebhookDeliveryWorker.java      # Async delivery worker
-    └── PspClient.java                  # HTTP client for mock PSP
+k PSP
 ```
