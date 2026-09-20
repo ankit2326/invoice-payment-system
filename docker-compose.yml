@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: invoice_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  mock-psp:
+    build: .
+    environment:
+      SPRING_PROFILES_ACTIVE: psp
+      SERVER_PORT: 9090
+    ports:
+      - "9090:9090"
+
+  app:
+    build: .
+    environment:
+      SPRING_PROFILES_ACTIVE: api
+      SERVER_PORT: 8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: invoice_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      PSP_BASE_URL: http://mock-psp:9090
+      PSP_TIMEOUT_MS: 5000
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mock-psp:
+        condition: service_started
+
+volumes:
+  pgdata:

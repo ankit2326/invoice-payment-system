@@ -1,0 +1,13 @@
+target/
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.git/
+.gitignore
+.gitattributes
+DESIGN.md
+AI_USAGE.md
+API.md
+README.md
