@@ -132,7 +132,5 @@ docker compose up postgres mock-psp -d
 
 ## Demo Video
 
-> **[Video link placeholder]** — Record a 5-10 minute walkthrough covering architecture, live demo, state machine, and one failure mode.
+> **[Video link placeholder]** — https://www.loom.com/share/0c40c2ca96aa49d78f60a8ae13f2212c .
 
-k PSP
-```
